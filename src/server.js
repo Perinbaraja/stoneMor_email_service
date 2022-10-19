@@ -9,9 +9,9 @@ const create = async () => {
   //Allowing cors
   app.use(
     cors({
-      origin: true,
+      origin: ["*"],
+      methods: ["GET", "POST", "PATCH", "DELETE"],
       credentials: true,
-      exposedHeaders: ["set-cookie"],
     })
   );
   //Body parser
