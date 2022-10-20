@@ -5,7 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const serverless = require("serverless-http");
-const { sendMail } = require("./services/mail.services");
+const { sendMail } = require("../services/mail.services");
 let from = `StoneMor <perinbaraja1996@gmail.com>`;
 
 const app = express();
