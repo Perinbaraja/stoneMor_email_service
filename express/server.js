@@ -12,13 +12,13 @@ const app = express();
 app.use(bodyParser.json());
 const router = express.Router();
 // //Allowing cors
-// app.use(
-//   cors({
-//     origin: ["https://main.d3vw6ap4ml2k0h.amplifyapp.com"],
-//     methods: ["GET", "POST", "PATCH", "DELETE"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: ["*"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    credentials: true,
+  })
+);
 // //Body parser
 // app.use(express.json({ limit: "50mb" }));
 // app.use(
