@@ -2,12 +2,15 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "functions/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "netlify-lambda build express",
     "start": "nodemon server-local.js"
   },
-  "keywords": [],
+  "keywords": [
+    "netlify",
+    "express.js"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
