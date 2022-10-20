@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const serverless = require("serverless-http");
 let from = `StoneMor <perinbaraja1996@gmail.com>`;
 const app = express();
+app.use(bodyParser.json());
 const router = express.Router();
 // //Allowing cors
 // app.use(
