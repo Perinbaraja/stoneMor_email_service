@@ -14,7 +14,7 @@ const router = express.Router();
 // //Allowing cors
 app.use(
   cors({
-    origin: ["*"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
