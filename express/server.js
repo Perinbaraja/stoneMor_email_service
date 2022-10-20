@@ -14,7 +14,7 @@ const router = express.Router();
 // //Allowing cors
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://main.d3vw6ap4ml2k0h.amplifyapp.com/"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
