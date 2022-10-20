@@ -1,12 +1,7 @@
-const mongoose = require("mongoose");
-
 const server = require("./server");
 
 const port = 5100;
-process.on("exit", function () {
-  // console.log("db disconnected");
-  mongoose.disconnect();
-});
+
 server
   .create()
   .then((app) => {
