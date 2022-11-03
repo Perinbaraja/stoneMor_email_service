@@ -3,7 +3,7 @@ const express = require("express");
 const { sendMail } = require("../../services/mail.services");
 const router = express.Router();
 router.get("/", (req, res) => res.send("mail Route"));
-let from = `StoneMor <perinbaraja1996@gmail.com>`;
+let from = `StoneMor Survey <perinbaraja1996@gmail.com>`;
 
 router.post("/send", async (req, res) => {
   try {
