@@ -57,6 +57,29 @@ router.post("/send", async (req, res) => {
   }
 });
 
+router.post("/linksend", async (req, res) => {
+  try {
+    const { mail, userName, surveyLink, survey } = req.body;
+
+    // console.log(surveyLink, mail);
+    const mailOptions = {
+      from: from,
+      to: mail,
+      subject: `stonemor survey Link`,
+      html: `<p><strong>
+        Hello ${userName},<br/><br/>
+        Please click the link below to attend the survey - ${survey}  <br/>
+        <a href="${surveyLink}">${surveyLink}</a><br/><br/><br/>
+        Regards,<br/> Stonemor Survey Team </strong></p>`,
+    };
+    const mailSent = await sendMail(mailOptions);
+    res.json({ success: true, mailSent });
+  } catch (err) {
+    console.log("mailChat err: ", err);
+    return res.json({ msg: err || config.DEFAULT_RES_ERROR });
+  }
+});
+
 //Middleware configuration
 app.use("/.netlify/functions/server", router); // path must route to lambda
 app.use("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
