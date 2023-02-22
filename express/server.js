@@ -68,7 +68,7 @@ router.post("/linksend", async (req, res) => {
       subject: `stonemor survey Link`,
       html: `<p><strong>
         Hello ${userName},<br/><br/>
-        Please <a href="${surveyLink}" style="color: #0066cc; text-decoration: none; font-weight: bold;">click here</a> to attend the survey - ${survey}  <br/><br/><br/>
+        Please <a href="${surveyLink}">click here</a> to attend the survey - ${survey}  <br/><br/><br/>
         Regards,<br/> Stonemor Survey Team </strong></p>`,
     };
     const mailSent = await sendMail(mailOptions);
