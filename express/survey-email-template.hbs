@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+  </head>
+  <body>
+    <h1>{{message}}</h1>
+    <p>{{description}}</p>
+    <form id="myForm" method="POST" action={{form.action }}>
+      <div>
+        <input type="range" min="1" max="10" name="rating" onchange="updateValue(this.value);">
+        <p>Rating: <span id="ratingValue">{{rating}}</span></p>
+      </div>
+      <p>{{feedback}}</p>
+      <button type="submit">Submit</button>
+    </form>
+    <script>
+         function updateValue(newValue) {
+        document.getElementById("ratingValue").innerHTML = newValue;
+        var form = document.getElementById("myForm");
+        var url = "https://main.d3d8mcg1fsym22.amplifyapp.com/surveyComplete?rating=" + newValue;
+        form.action = url;
+      }
+    </script>
+  </body>
+</html>
