@@ -6,7 +6,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const serverless = require("serverless-http");
 const { sendMail } = require("../services/mail.services");
-let from = `StoneMor Survey <ashok.krishnan@changecx.com>`;
+let from = `StoneMor Survey <akris@stonemor.com>`;
 const handlebars = require("handlebars");
 const fs = require("fs");
 
