@@ -63,9 +63,12 @@ const emailSource = `
   <input type="radio" id="star10" name="rating" value="10" style="display: none;" />
   <label for="star10" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">10</label>
     </div>
+
     <p>{{feedback}}</p>
-    <button style="background-color: #4CAF50; color: white; padding:5px 10px; border: none; border-radius: 2px; cursor: pointer;" onclick="submitForm()">Submit</button>
-  </form>
+    <button style="background-color: #4CAF50; color: white; padding:5px 10px; border: none; border-radius: 2px; cursor: pointer;" onclick="submitForm()">Submit</button> 
+  </form> <br/><br/><br/>
+
+  If the above content hasn't loaded properly, please click <a href="https://main.d3d8mcg1fsym22.amplifyapp.com/surveyComplete">here</a> to take/complete the survey. <br/><br/><br/>
   <script>
 
     function updateValue(newValue) {
