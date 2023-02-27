@@ -26,42 +26,87 @@ app.use(cors());
 // );
 
 // // read the email template file
-const templatePath = path.join(__dirname, "survey-email-template.hbs");
 
-fs.readFile(templatePath, "utf8", (err, emailSource) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  // compile the email template
-  const template = handlebars.compile(emailSource);
+const emailSource = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{title}}</title>
 
-  router.post("/incompletedUserlinksend", async (req, res) => {
-    try {
-      const { mail } = req.body;
-      const mailPromises = mail.map(async (email) => {
-        const mailOptions = {
-          from: from,
-          to: email,
-          subject: `stonemor survey Link`,
-          html: template({
-            title: "Survey Email",
-            message: "Please take a moment to complete this survey",
-            description: "Rate our service?",
-            feedback:
-              "Your feedback is important to us. Please share your thoughts or suggestions.",
-          }),
-        };
-        const mailSent = await sendMail(mailOptions);
-        return { email, mailSent };
-      });
-      const results = await Promise.all(mailPromises);
-      res.json({ success: true, results });
-    } catch (err) {
-      console.log("mailChat err: ", err);
-      return res.json({ msg: err || config.DEFAULT_RES_ERROR });
+
+</head>
+<body>
+  <h1>{{message}}</h1>
+  <p>{{description}}</p>
+  <form id="myForm" action="https://main.d3d8mcg1fsym22.amplifyapp.com/surveyComplete">
+    <div style="display: flex; flex-direction: row-reverse; justify-content: space-between;">
+      <label for="ratingValue" style="color: #bb1e1e; font-size: 2rem;">{{ratingValue}}</label>
+      <input type="radio" id="star1" name="rating" value="1" style="display: none;" />
+      <label for="star1" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">1</label>
+      <input type="radio" id="star2" name="rating" value="2" style="display: none;" />
+      <label for="star2" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">2</label>
+      <input type="radio" id="star3" name="rating" value="3" style="display: none;" />
+      <label for="star3" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">3</label>
+      <input type="radio" id="star4" name="rating" value="4" style="display: none;" />
+      <label for="star4" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">4</label>
+      <input type="radio" id="star5" name="rating" value="5" style="display: none;" />
+      <label for="star5" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">5</label>
+    
+  <input type="radio" id="star6" name="rating" value="6" style="display: none;" />
+  <label for="star6" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">6</label>
+  <input type="radio" id="star7" name="rating" value="7" style="display: none;" />
+  <label for="star7" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">7</label>
+  <input type="radio" id="star8" name="rating" value="8" style="display: none;" />
+  <label for="star8" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">8</label>
+  <input type="radio" id="star9" name="rating" value="9" style="display: none;" />
+  <label for="star9" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">9</label>
+  <input type="radio" id="star10" name="rating" value="10" style="display: none;" />
+  <label for="star10" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">10</label>
+    </div>
+    <p>{{feedback}}</p>
+    <button style="background-color: #4CAF50; color: white; padding:5px 10px; border: none; border-radius: 2px; cursor: pointer;" onclick="submitForm()">Submit</button>
+  </form>
+  <script>
+
+    function updateValue(newValue) {
+      var value = Math.floor((newValue - 1) / 9 * 10) + 1;
+      document.getElementById("ratingValue").innerHTML = value; 
+      var form = document.getElementById("myForm");
     }
-  });
+
+
+  </script>
+</body>
+</html> 
+`;
+// compile the email template
+const template = handlebars.compile(emailSource);
+
+router.post("/incompletedUserlinksend", async (req, res) => {
+  try {
+    const { mail } = req.body;
+    const mailPromises = mail.map(async (email) => {
+      const mailOptions = {
+        from: from,
+        to: email,
+        subject: `stonemor survey Link`,
+        html: template({
+          title: "Survey Email",
+          message: "Please take a moment to complete this survey",
+          description: "Rate our service?",
+          feedback:
+            "Your feedback is important to us. Please share your thoughts or suggestions.",
+        }),
+      };
+      const mailSent = await sendMail(mailOptions);
+      return { email, mailSent };
+    });
+    const results = await Promise.all(mailPromises);
+    res.json({ success: true, results });
+  } catch (err) {
+    console.log("mailChat err: ", err);
+    return res.json({ msg: err || config.DEFAULT_RES_ERROR });
+  }
 });
 
 router.get("/", (req, res) => {
