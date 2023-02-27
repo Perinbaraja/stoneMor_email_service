@@ -26,11 +26,11 @@ app.use(cors());
 // );
 
 // // read the email template file
-// const templatePath = path.join(__dirname, "survey-email-template.hbs");
-// const emailSource = fs.readFileSync(templatePath, "utf8");
+const templatePath = path.join(__dirname, "survey-email-template.hbs");
+const emailSource = fs.readFileSync(templatePath, "utf8");
 
-// // compile the email template
-// const template = handlebars.compile(emailSource);
+// compile the email template
+const template = handlebars.compile(emailSource);
 
 router.get("/", (req, res) => {
   res.writeHead(200, { "Content-Type": "text/html" });
@@ -88,41 +88,43 @@ router.post("/linksend", async (req, res) => {
   }
 });
 
-// router.post("/incompletedUserlinksend", async (req, res) => {
-//   try {
-//     const { mail } = req.body;
+router.post("/incompletedUserlinksend", async (req, res) => {
+  try {
+    const { mail } = req.body;
+    const mailPromises = mail.map(async (email) => {
+      const mailOptions = {
+        from: from,
+        to: email,
+        subject: `stonemor survey Link`,
+        html: template({
+          title: "Survey Email",
+          message: "Please take a moment to complete this survey",
+          description: "Rate our service?",
+          feedback:
+            "Your feedback is important to us. Please share your thoughts or suggestions.",
+        }),
+      };
+      const mailSent = await sendMail(mailOptions);
+      return { email, mailSent };
+    });
+    const results = await Promise.all(mailPromises);
+    res.json({ success: true, results });
+  } catch (err) {
+    console.log("mailChat err: ", err);
+    return res.json({ msg: err || config.DEFAULT_RES_ERROR });
+  }
+});
 
-//     // console.log(surveyLink, mail);
-//     const mailOptions = {
-//       from: from,
-//       to: mail,
-//       subject: `stonemor survey Link`,
-//       html: template({
-//         title: "Survey Email",
-//         message: "Please take a moment to complete this survey",
-//         description: "Rate our service?",
-//         feedback:
-//           "Your feedback is important to us. Please share your thoughts or suggestions.",
-//       }),
-//     };
-//     const mailSent = await sendMail(mailOptions);
-//     res.json({ success: true, mailSent });
-//   } catch (err) {
-//     console.log("mailChat err: ", err);
-//     return res.json({ msg: err || config.DEFAULT_RES_ERROR });
-//   }
-// });
+router.post("/submit-rating", async (req, res) => {
+  try {
+    const { rating } = req.body;
 
-// router.post("/submit-rating", async (req, res) => {
-//   try {
-//     const { rating } = req.body;
-
-//     res.json({ success: true, rating });
-//   } catch (err) {
-//     console.log("submitRating err: ", err);
-//     return res.json({ msg: err || config.DEFAULT_RES_ERROR });
-//   }
-// });
+    res.json({ success: true, rating });
+  } catch (err) {
+    console.log("submitRating err: ", err);
+    return res.json({ msg: err || config.DEFAULT_RES_ERROR });
+  }
+});
 
 //Middleware configuration
 app.use("/.netlify/functions/server", router); // path must route to lambda

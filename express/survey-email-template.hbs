@@ -1,25 +1,48 @@
-<html>
-  <head>
-    <title>{{title}}</title>
-  </head>
-  <body>
-    <h1>{{message}}</h1>
-    <p>{{description}}</p>
-    <form id="myForm" method="POST" action={{form.action }}>
-      <div>
-        <input type="range" min="1" max="10" name="rating" onchange="updateValue(this.value);">
-        <p>Rating: <span id="ratingValue">{{rating}}</span></p>
-      </div>
-      <p>{{feedback}}</p>
-      <button type="submit">Submit</button>
-    </form>
-    <script>
-         function updateValue(newValue) {
-        document.getElementById("ratingValue").innerHTML = newValue;
-        var form = document.getElementById("myForm");
-        var url = "https://main.d3d8mcg1fsym22.amplifyapp.com/surveyComplete?rating=" + newValue;
-        form.action = url;
-      }
-    </script>
-  </body>
-</html>
+ <html>
+    <head>
+      <title>{{title}}</title>
+
+    
+    </head>
+    <body>
+      <h1>{{message}}</h1>
+      <p>{{description}}</p>
+      <form id="myForm" action=`https://main.d3d8mcg1fsym22.amplifyapp.com/surveyComplete`>
+      <div style="display: flex; flex-direction: row-reverse; justify-content: space-between;">
+ <label for="ratingValue" style="color: #bb1e1e; font-size: 2rem;">{{ratingValue}}</label>
+      <input type="radio" id="star1" name="rating" value="1" style="display: none;" />
+      <label for="star1" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">1</label>
+      <input type="radio" id="star2" name="rating" value="2" style="display: none;" />
+      <label for="star2" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">2</label>
+      <input type="radio" id="star3" name="rating" value="3" style="display: none;" />
+      <label for="star3" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">3</label>
+      <input type="radio" id="star4" name="rating" value="4" style="display: none;" />
+      <label for="star4" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">4</label>
+      <input type="radio" id="star5" name="rating" value="5" style="display: none;" />
+      <label for="star5" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">5</label>
+      <input type="radio" id="star6" name="rating" value="6" style="display: none;" />
+      <label for="star6" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">6</label>
+      <input type="radio" id="star6" name="rating" value="7" style="display: none;" />
+      <label for="star7" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">7</label>
+      <input type="radio" id="star6" name="rating" value="8" style="display: none;" />
+      <label for="star8" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">8</label>
+      <input type="radio" id="star6" name="rating" value="9" style="display: none;" />
+      <label for="star9" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">9</label>
+      <input type="radio" id="star6" name="rating" value="10" style="display: none;" />
+      <label for="star10" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">10</label>
+        </div>
+        <p>{{feedback}}</p>
+        <button style="background-color: #4CAF50; color: white; padding:5px 10px; border: none; border-radius: 2px; cursor: pointer;" onclick="submitForm()">Submit</button>
+      </form>
+      <script>
+
+        function updateValue(newValue) {
+          var value = Math.floor((newValue - 1) / 9 * 10) + 1;
+          document.getElementById("ratingValue").innerHTML = value; 
+          var form = document.getElementById("myForm");
+        }
+
+
+      </script>
+    </body>
+  </html> 
