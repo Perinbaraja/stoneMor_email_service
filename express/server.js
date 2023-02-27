@@ -33,8 +33,9 @@ fs.readFile(templatePath, "utf8", (err, emailSource) => {
     console.error(err);
     return;
   }
-  // compile the email template)
+  // compile the email template
   const template = handlebars.compile(emailSource);
+
   router.post("/incompletedUserlinksend", async (req, res) => {
     try {
       const { mail } = req.body;
