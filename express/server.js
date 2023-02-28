@@ -36,11 +36,13 @@ const emailSource = `
 
 </head>
 <body>
+
   <h1>{{message}}</h1>
   <p>{{description}}</p>
-  <form id="myForm" action="https://main.d3d8mcg1fsym22.amplifyapp.com/surveyComplete">
-    <div style="display: flex; flex-direction: row-reverse; justify-content: space-between;">
-      <label for="ratingValue" style="color: #bb1e1e; font-size: 2rem;">{{ratingValue}}</label>
+  <form id="myForm" action="https://main.d3d8mcg1fsym22.amplifyapp.com/shortsurvey/{{surveyEntryId}}">
+    <div style=" display: flex;
+    flex-direction: row;
+    justify-content: space-between;">
       <input type="radio" id="star1" name="rating" value="1" style="display: none;" />
       <label for="star1" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">1</label>
       <input type="radio" id="star2" name="rating" value="2" style="display: none;" />
@@ -60,6 +62,7 @@ const emailSource = `
   <label for="star8" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">8</label>
   <input type="radio" id="star9" name="rating" value="9" style="display: none;" />
   <label for="star9" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">9</label>
+ 
   <input type="radio" id="star10" name="rating" value="10" style="display: none;" />
   <label for="star10" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">10</label>
     </div>
@@ -68,7 +71,7 @@ const emailSource = `
     <button style="background-color: #4CAF50; color: white; padding:5px 10px; border: none; border-radius: 2px; cursor: pointer;" onclick="submitForm()">Submit</button> 
   </form> <br/><br/><br/>
 
-  If the above content hasn't loaded properly, please click <a href="https://main.d3d8mcg1fsym22.amplifyapp.com/surveyComplete">here</a> to take/complete the survey. <br/><br/><br/>
+  If the above content hasn't loaded properly, please click <a href="https://main.d3d8mcg1fsym22.amplifyapp.com/shortsurvey/{{surveyEntryId}}">here</a> to take/complete the survey. <br/><br/><br/>
   <script>
 
     function updateValue(newValue) {
@@ -88,10 +91,11 @@ const template = handlebars.compile(emailSource);
 router.post("/incompletedUserlinksend", async (req, res) => {
   try {
     const { mail } = req.body;
-    const mailPromises = mail.map(async (email) => {
+    const mailPromises = mail.map(async (data) => {
+      console.log(data);
       const mailOptions = {
-        from: from,
-        to: email,
+        from: `StoneMor Short Survey <akris@stonemor.com>`,
+        to: data.email,
         subject: `stonemor survey Link`,
         html: template({
           title: "Survey Email",
@@ -99,10 +103,13 @@ router.post("/incompletedUserlinksend", async (req, res) => {
           description: "Rate our service?",
           feedback:
             "Your feedback is important to us. Please share your thoughts or suggestions.",
+          surveyEntryId: data.SurveyEntryId,
+
+          email: data.email,
         }),
       };
       const mailSent = await sendMail(mailOptions);
-      return { email, mailSent };
+      return { email: data.email, mailSent };
     });
     const results = await Promise.all(mailPromises);
     res.json({ success: true, results });
