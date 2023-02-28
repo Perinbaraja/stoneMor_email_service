@@ -38,8 +38,19 @@ const emailSource = `
 <body>
 
   <h1>{{message}}</h1>
-  <p>{{description}}</p>
+  <h3>{{description}}</h3>
   <form id="myForm" action="https://main.d3d8mcg1fsym22.amplifyapp.com/shortsurvey/{{surveyEntryId}}">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #444;">
+  <div style="flex-basis: 10%; text-align: right;">
+    <p style="text-align: right; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #444; ">Not at all likely</p>
+  </div>
+  <div id="sidebar-left" style="flex-basis: 50%; text-align: center; padding-right: 250px  ">
+    <p></p>
+  </div>
+  <div id="sidebar-right" style="flex-basis: 25%; text-align: center; ;">
+    <p>Extremely likely</p>
+  </div>
+</div>
     <div style=" display: flex;
     flex-direction: row;
     justify-content: space-between;">
