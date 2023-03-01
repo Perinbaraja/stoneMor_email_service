@@ -48,7 +48,7 @@ const emailSource = `
     <p></p>
   </div>
   <div id="sidebar-right" style="flex-basis: 25%; text-align: center; ;">
-    <p>Extremely likely</p>
+    <p></p>
   </div>
 </div>
     <div style=" display: flex;
@@ -76,7 +76,9 @@ const emailSource = `
  
   <input type="radio" id="star10" name="rating" value="10" style="display: none;" />
   <label for="star10" style="background-color: #bb1e1e; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 5px 10px; border-radius: 2px; margin-right: 3px;">10</label>
+
     </div>
+    <p style="padding-left: 330px;" >Extremely likely</p>  <br/><br/><br/>
 
     <p>{{feedback}}</p>
     <button style="background-color: #4CAF50; color: white; padding:5px 10px; border: none; border-radius: 2px; cursor: pointer;" onclick="submitForm()">Submit</button> 
